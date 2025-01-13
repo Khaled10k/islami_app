@@ -20,6 +20,7 @@ class AppAssets {
   static const String RadioItem = '$routePath/radioitem.png';
   static const String PrayTime = '$routePath/PrayTime.png';
   static const String Azkar1 = '$routePath/azkar1.png';
+  static const String MorningAzkar = '$routePath/MorningAzkar.png';
 
 }
 

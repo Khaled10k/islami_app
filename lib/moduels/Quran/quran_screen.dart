@@ -138,6 +138,33 @@ class _QuranScreenState extends State<QuranScreen> {
   
 
   ];
+  
+  late List<SuraDataModel> filteredSuraList;
+  final TextEditingController searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    filteredSuraList = List.from(suraList);
+    searchController.addListener(_searchSura);
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
+  void _searchSura() {
+    final query = searchController.text.toLowerCase();
+    setState(() {
+      filteredSuraList = suraList.where((sura) {
+        return sura.suraNameEN.toLowerCase().contains(query) ||
+            sura.suraNameAR.contains(query);
+      }).toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -165,6 +192,7 @@ class _QuranScreenState extends State<QuranScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: TextFormField(
+                    controller: searchController,
                     cursorColor: AppColors.primaryDark,
                     style: TextStyle(
                         fontFamily: "Janna",
@@ -172,8 +200,8 @@ class _QuranScreenState extends State<QuranScreen> {
                         fontWeight: FontWeight.bold,
                         color: AppColors.titleTextColor),
                     decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 16.0, horizontal: 20.0),
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 16.0, horizontal: 20.0),
                       filled: true,
                       fillColor: AppColors.blackColor.withOpacity(.7),
                       enabledBorder: OutlineInputBorder(
@@ -190,7 +218,7 @@ class _QuranScreenState extends State<QuranScreen> {
                         AssetImage(Appicons.Quran),
                         color: AppColors.primaryDark,
                       ),
-                      hintText: 'Sura Name',
+                      hintText: 'Search Sura',
                       hintStyle: TextStyle(
                           fontFamily: "Janna",
                           fontSize: 16,
@@ -219,15 +247,16 @@ class _QuranScreenState extends State<QuranScreen> {
                 SizedBox(
                   height: 155,
                   child: ListView.separated(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) => RecentItemWidget(
-                            suraDataModel: recentDataList[index],
-                          ),
-                      separatorBuilder: (context, index) => SizedBox(
-                            width: 10,
-                          ),
-                      itemCount: recentDataList.length),
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) => RecentItemWidget(
+                      suraDataModel: recentDataList[index],
+                    ),
+                    separatorBuilder: (context, index) => SizedBox(
+                      width: 10,
+                    ),
+                    itemCount: recentDataList.length,
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(
@@ -250,21 +279,18 @@ class _QuranScreenState extends State<QuranScreen> {
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   padding: EdgeInsets.symmetric(horizontal: 20),
-                    itemBuilder: (context, index) => GestureDetector(
-                      onTap: (){
-                        Navigator.pushNamed(context, QuranDetailsView.routeName,
-                        arguments:suraList[index]
-                        
-                        );
-                      },
-                      child: SuraItemWedget(suraDataModel: suraList[index],)),
-                    separatorBuilder: (context, index) => Divider(
-                      color: AppColors.white,
-                      thickness: 1.5,
-                      endIndent: 50,
-                      indent: 50,
-                    ),
-                    itemCount: suraList.length)
+                  itemBuilder: (context, index) => GestureDetector(
+                    onTap: () => _onSuraTap(index),
+                    child: SuraItemWedget(suraDataModel: filteredSuraList[index]),
+                  ),
+                  separatorBuilder: (context, index) => Divider(
+                    color: AppColors.white,
+                    thickness: 1.5,
+                    endIndent: 50,
+                    indent: 50,
+                  ),
+                  itemCount: filteredSuraList.length,
+                )
               ],
             ),
           ),
@@ -272,4 +298,16 @@ class _QuranScreenState extends State<QuranScreen> {
       ),
     );
   }
-}
+
+  _onSuraTap(int index) {
+    final selectedSura = filteredSuraList[index];
+    setState(() {
+      recentDataList.removeWhere((sura) => sura.id == selectedSura.id);
+      recentDataList.insert(0, selectedSura);
+    });
+    Navigator.pushNamed(
+      context,
+      QuranDetailsView.routeName,
+      arguments: selectedSura,
+    );
+  }}

@@ -35,7 +35,7 @@ The app includes Quran surahs, Azkar, Hadith, and audio features – all with th
 
 ### Requirements
 
-- Flutter SDK
-- Android Studio or Visual Studio Code
+-- Flutter SDK
+-- Android Studio or Visual Studio Code
 
 

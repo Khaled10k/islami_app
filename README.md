@@ -1,16 +1,41 @@
-# islami_app
+# 🕌 Islami App – Flutter
 
-A new Flutter project.
+**Islami** is a beautifully designed Islamic mobile app built using **Flutter**, providing users with essential Islamic content and tools in a smooth and modern experience.  
+The app includes Quran surahs, Azkar, Hadith, and audio features – all with theme support and clear navigation.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 📱 Features
 
-A few resources to get you started if this is your first Flutter project:
+- 📖 View full list of Quran surahs with details
+- 🕋 Azkar (morning, evening, prayer, etc.)
+- 📜 Collection of Hadith
+- 🔊 Play audio recitations for surahs
+- 🌓 Switch between Light and Dark themes
+- 🌍 Multi-language ready structure
+- 📱 Fully responsive and adaptive layout
+- 🧱 Clean architecture and modular structure
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🧠 Tech Stack
+
+| Layer            | Technology                 |
+|------------------|-----------------------------|
+| Language         | Dart                        |
+| Framework        | Flutter                     |
+| Architecture     | Clean, modular structure     |
+| State Management | Provider / Cubit            |
+| UI Components    | Material Design             |
+| Tools            | Git, GitHub, Android Studio |
+
+---
+
+## 🚀 Getting Started
+
+### Requirements
+
+- Flutter SDK
+- Android Studio or Visual Studio Code
+
+
